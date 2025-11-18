@@ -9,7 +9,7 @@
                     <h6>Manage your Returns</h6>
                 </div>
                 <div class="page-btn">
-                    <a href="{{ route('sales/add') }}" class="btn btn-added">
+                    <a href="#" class="btn btn-added">
                         <img src="{{ asset('assets/img/icons/plus.svg') }}" alt="img" class="me-2">Add New Sales Return
                     </a>
                 </div>
