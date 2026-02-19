@@ -6,9 +6,9 @@
         </div>
         <div class="login-content">
             <div class="login-userset">
-                <div class="login-logo">
+                {{-- <div class="login-logo">
                     <img src="{{ asset('assets/img/logo.png') }}" alt="img">
-                </div>
+                </div> --}}
                 <div class="login-userheading">
                     <h3>Sign In</h3>
                     <h4>Please login to your account</h4>
@@ -16,10 +16,10 @@
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="form-login">
-                        <label>Email</label>
+                        <label>Mobile Number</label>
                         <div class="form-addons">
-                            <input type="text" name="email" placeholder="Enter your email address" required>
-                            <img src="{{ asset('assets/img/icons/mail.svg') }}" alt="img">
+                            <input type="text" name="mobile" placeholder="Enter your mobile number" required>
+                            {{-- <img src="{{ asset('assets/img/icons/phone.svg') }}" alt="img"> --}}
                         </div>
                     </div>
                     <div class="form-login">
@@ -29,22 +29,22 @@
                             <span class="fas toggle-password fa-eye-slash"></span>
                         </div>
                     </div>
-                    <div class="form-login">
+                    {{-- <div class="form-login">
                         <div class="alreadyuser">
                             <h4><a href="forgetpassword.html" class="hover-a">Forgot Password?</a></h4>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-login">
                         <button type="submit" class="btn btn-login">Sign In</button>
                     </div>
                 </form>
-                <div class="signinform text-center">
+                {{-- <div class="signinform text-center">
                     <h4>Don’t have an account? <a href="{{ route('register') }}" class="hover-a">Sign Up</a></h4>
-                </div>
-                <div class="form-setlogin">
+                </div> --}}
+                {{-- <div class="form-setlogin">
                     <h4>Or sign up with</h4>
-                </div>
-                <div class="form-sociallink">
+                </div> --}}
+                {{-- <div class="form-sociallink">
                     <ul>
                         <li>
                             <a href="javascript:void(0);">
@@ -59,7 +59,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

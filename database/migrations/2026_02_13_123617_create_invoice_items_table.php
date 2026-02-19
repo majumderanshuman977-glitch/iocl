@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+
+//     - id (Primary Key)
+// - invoice_id (Foreign Key → invoices.id)
+// - product_id (Foreign Key → products.id)
+// - product_name (VARCHAR) -- snapshot for historical record
+// - quantity (INT, NOT NULL)
+// - price (DECIMAL(10,2)) -- snapshot at time of sale
+// - line_total (DECIMAL(10,2))
+// - created_at (TIMESTAMP)
+        Schema::create('invoice_items', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('invoice_id');
+            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->string('product_name');
+            $table->integer('quantity');
+            $table->decimal('price', 10, 2);
+            $table->decimal('line_total', 10, 2);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('invoice_items');
+    }
+};

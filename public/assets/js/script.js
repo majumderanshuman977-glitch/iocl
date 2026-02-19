@@ -1,6 +1,20 @@
 $(document).ready(function(){var $wrapper=$('.main-wrapper');var $slimScrolls=$('.slimscroll');var $pageWrapper=$('.page-wrapper');feather.replace();$(window).resize(function(){if($('.page-wrapper').length>0){var height=$(window).height();$(".page-wrapper").css("min-height",height);}});$('body').append('<div class="sidebar-overlay"></div>');$(document).on('click','#mobile_btn',function(){$wrapper.toggleClass('slide-nav');$('.sidebar-overlay').toggleClass('opened');$('html').addClass('menu-opened');$('#task_window').removeClass('opened');return false;});$(".sidebar-overlay").on("click",function(){$('html').removeClass('menu-opened');$(this).removeClass('opened');$wrapper.removeClass('slide-nav');$('.sidebar-overlay').removeClass('opened');$('#task_window').removeClass('opened');});$(document).on("click",".hideset",function(){$(this).parent().parent().parent().hide();});$(document).on("click",".delete-set",function(){$(this).parent().parent().hide();});if($('.product-slide').length>0){$('.product-slide').owlCarousel({items:1,margin:30,dots:false,nav:true,loop:false,responsiveClass:true,responsive:{0:{items:1},800:{items:1},1170:{items:1}}});}
 if($('.owl-product').length>0){var owl=$('.owl-product');owl.owlCarousel({margin:10,dots:false,nav:true,loop:false,touchDrag:false,mouseDrag:false,responsive:{0:{items:2},768:{items:4},1170:{items:8}}});}
-if($('.datanew').length>0){$('.datanew').DataTable({"bFilter":true,"sDom":'fBtlpi','pagingType':'numbers',"ordering":true,"language":{search:' ',sLengthMenu:'_MENU_',searchPlaceholder:"Search...",info:"_START_ - _END_ of _TOTAL_ items",},initComplete:(settings,json)=>{$('.dataTables_filter').appendTo('#tableSearch');$('.dataTables_filter').appendTo('.search-input');},});}
+// if($('.datanew').length>0){$('.datanew').DataTable({"bFilter":true,"sDom":'fBtlpi','pagingType':'numbers',"ordering":true,"language":{search:' ',sLengthMenu:'_MENU_',searchPlaceholder:"Search...",info:"_START_ - _END_ of _TOTAL_ items",},initComplete:(settings,json)=>{$('.dataTables_filter').appendTo('#tableSearch');$('.dataTables_filter').appendTo('.search-input');},});}
+if ($('.datanew').length > 0) {
+    $('.datanew').DataTable({
+        paging: true,
+        searching: false,   // disables search
+        bFilter: false,     // extra safety
+        ordering: true,
+        dom: 'tlpi',        // table + length + pagination + info
+        pagingType: 'numbers',
+        language: {
+            sLengthMenu: '_MENU_',
+            info: "_START_ - _END_ of _TOTAL_ items",
+        }
+    });
+}
 function readURL(input){if(input.files&&input.files[0]){var reader=new FileReader();reader.onload=function(e){$('#blah').attr('src',e.target.result);}
 reader.readAsDataURL(input.files[0]);}}
 $("#imgInp").change(function(){readURL(this);});if($('.datatable').length>0){$('.datatable').DataTable({"bFilter":false});}
@@ -99,3 +113,28 @@ toggleSwitch.addEventListener('change',switchTheme,false);}
 if(window.location.hash=="#LightMode"){localStorage.setItem('theme','dark');}
 else{if(window.location.hash=="#DarkMode"){localStorage.setItem('theme','light');}}
 $('ul.tabs li').click(function(){var $this=$(this);var $theTab=$(this).attr('id');console.log($theTab);if($this.hasClass('active')){}else{$this.closest('.tabs_wrapper').find('ul.tabs li, .tabs_container .tab_content').removeClass('active');$('.tabs_container .tab_content[data-tab="'+$theTab+'"], ul.tabs li[id="'+$theTab+'"]').addClass('active');}});});
+
+
+
+// date range
+$(function() {
+
+        $('#date_range').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            $('#date_range').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(
+                    picker.startDate.format('YYYY-MM-DD') +
+                    ' to ' +
+                    picker.endDate.format('YYYY-MM-DD')
+                );
+            });
+
+            $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+});

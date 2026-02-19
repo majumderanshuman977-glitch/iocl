@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Carbon\Carbon;
-use Session;
-use Auth;
 use DB;
+use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -29,47 +30,33 @@ class LoginController extends Controller
     /** Authenticate user and redirect */
     public function authenticate(Request $request)
     {
+
         $request->validate([
-            'email'    => 'required|string',
+            'mobile'    => 'required|string',
             'password' => 'required|string',
         ]);
         try {
-            $credentials = $request->only('email', 'password') + ['status' => 'Active'];
+            $credentials = $request->only('mobile', 'password') + ['status' => 'active'];
+
             if (Auth::attempt($credentials)) {
-                $user = Auth::user();
-                Session::put($this->getUserSessionData($user));
-             
+                // $user = Auth::user();
+
+
+                // Session::put($this->getUserSessionData($user));
+
                 // Update last login
-                $user->update(['last_login' => Carbon::now()]);
-                return redirect()->intended('home')->with('success', 'Login successfully :)'); 
+                // $user->update(['last_login' => Carbon::now()]);
+                return redirect()->intended('home')->with('success', 'Login successfully :)');
             }
-            return redirect('login')->with('error', 'Wrong Username or Password');
+
+            return redirect('login')->with('error', 'Wrong Mobile or Password');
         } catch (\Exception $e) {
-            \Log::info($e);
+            Log::info($e);
             return redirect()->back()->with('error', 'Login failed. Please try again.');
         }
     }
 
-    /** Prepare User Session Data */
-    private function getUserSessionData($user)
-    {
-        return [
-            'name'                => $user->name,
-            'email'               => $user->email,
-            'user_id'             => $user->user_id,
-            'join_date'           => $user->join_date,
-            'phone_number'        => $user->phone_number,
-            'status'              => $user->status,
-            'role_name'           => $user->role_name,
-            'avatar'              => $user->avatar,
-            'position'            => $user->position,
-            'department'          => $user->department,
-            'line_manager'        => $user->line_manager,
-            'second_line_manager' => $user->second_line_manager,
-        ];
-    }
 
-    /** Logout and clear session */
     public function logout(Request $request)
     {
         $request->session()->flush();

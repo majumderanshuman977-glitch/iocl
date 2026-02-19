@@ -1,79 +1,124 @@
 @extends('layouts.master')
 @section('content')
-    <!-- Page-content -->
-    <div class="page-wrapper">
-        <div class="content">
-            <div class="page-header">
-                <div class="page-title">
-                    <h4>User Management</h4>
-                    <h6>Add/Update User</h6>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-body">
+<div class="page-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <div class="page-title">
+                <h4>User Management</h4>
+                <h6>Add User</h6>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="row">
+
+                        <!-- Left column -->
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
-                                <label>User Name</label>
-                                <input type="text">
+                                <label>Name</label>
+                                <input type="text" name="name" class="form-control"
+                                       value="{{ old('name') }}" required>
                             </div>
+
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text">
+                                <input type="text" name="email" class="form-control"
+                                       value="{{ old('email') }}">
                             </div>
+
                             <div class="form-group">
                                 <label>Password</label>
                                 <div class="pass-group">
-                                    <input type="password" class=" pass-input">
+                                    <input type="password" name="password"
+                                           class="pass-input form-control" required>
                                     <span class="fas toggle-password fa-eye-slash"></span>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Middle column -->
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
                                 <label>Mobile</label>
-                                <input type="text">
+                                <input type="text" name="mobile" class="form-control"
+                                       value="{{ old('mobile') }}" required>
                             </div>
+
                             <div class="form-group">
                                 <label>Role</label>
-                                <select class="select">
-                                    <option>Select</option>
-                                    <option>Role</option>
-                                    <option>Role1</option>
+                                <select class="form-control" name="roles[]" required>
+                                    @foreach($role as $r)
+                                        <option value="{{ $r->name }}"
+                                            @if(in_array($r->name, old('roles', []))) selected @endif>
+                                            {{ Str::title(str_replace('_', ' ', $r->name)) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label>Confirm Password</label>
                                 <div class="pass-group">
-                                    <input type="password" class=" pass-inputs">
+                                    <input type="password"
+                                           name="password_confirmation"
+                                           class="pass-input form-control">
                                     <span class="fas toggle-passworda fa-eye-slash"></span>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Image column -->
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
-                                <label> Profile Picture</label>
+                                <label>Profile Picture</label>
+
                                 <div class="image-upload image-upload-new">
-                                    <input type="file">
+                                    <input type="file" name="profile_image"
+                                           id="imageInput" accept="image/*">
+
                                     <div class="image-uploads">
-                                        <img src="{{ asset('assets/img/icons/upload.svg') }}" alt="img">
-                                        <h4>Drag and drop a file to upload</h4>
+                                        <img id="previewImage"
+                                             src=""
+                                             style="max-width:120px; margin-bottom:10px;">
+                                        <h4>Click or drag image to upload</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Buttons -->
                         <div class="col-lg-12">
-                            <a href="javascript:void(0);" class="btn btn-submit me-2">Submit</a>
-                            <a href="javascript:void(0);" class="btn btn-cancel">Cancel</a>
+                            <button type="submit" class="btn btn-submit me-2">
+                                Submit
+                            </button>
+                            <a href="{{ route('user/list') }}" class="btn btn-cancel">
+                                Cancel
+                            </a>
                         </div>
+
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>
-    <!-- End Page-content -->
-@section('script')
+</div>
 
 @endsection
+
+@section('script')
+<script>
+document.getElementById('imageInput').addEventListener('change', function(e) {
+    let reader = new FileReader();
+    reader.onload = function(event) {
+        document.getElementById('previewImage').src = event.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+});
+</script>
 @endsection
