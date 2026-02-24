@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('product_name');
             $table->decimal('price', 10, 2)->default(0);
             $table->bigInteger('quantity')->default(0);
+            $table->decimal('cgst',10,2)->default(0);
+            $table->decimal('sgst',10,2)->default(0);
             $table->longText('description')->nullable();
             $table->string('product_image')->nullable();
             $table->boolean('status')->default(true);

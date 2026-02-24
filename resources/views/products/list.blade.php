@@ -29,18 +29,18 @@
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <input type="text" name="name" value="{{ request('name') }}"
-                                        placeholder="Enter Product Name" class="form-control">
+                                        placeholder="Search by Product Name" class="form-control">
                                 </div>
                             </div>
 
                             <!-- Date Range -->
-                            <div class="col-lg-4 col-sm-6 col-12">
+                            {{-- <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <input type="text" name="date_range" id="date_range"
                                         value="{{ request('date_range') }}" placeholder="Select Date Range"
                                         class="form-control">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <!-- Buttons -->
                             <div class="col-lg-3 col-sm-6 col-12 ms-auto">
@@ -68,8 +68,8 @@
                                     <th>Price</th>
                                     <th>Stock Qty</th>
                                     <th>Status</th>
-                                    <th>Date</th>
-                                    <th>Created By</th>
+                                    <th>Update Date</th>
+                                    <th>Last Updated By</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -100,7 +100,7 @@
 
                                         {{-- <td> {{ $product->creator->getRoleNames()->first() ?? 'No Role' }}</td> --}}
                                         <td>
-                                            {{ ucfirst(str_replace('_', ' ', $product->creator->getRoleNames()->first() ?? 'No Role')) }}
+                                           {{$product->creator->name}} ({{ ucfirst(str_replace('_', ' ', $product->creator->getRoleNames()->first() ?? 'No Role')) }})
                                         </td>
 
                                         <td>
@@ -217,8 +217,10 @@
 
                     document.getElementById('stockProductName').textContent = name;
 
+                    let url = "{{ route('products.stock.update', ':id') }}";
+                    url = url.replace(':id', id);
+                    document.getElementById('stockForm').action = url;
 
-                    document.getElementById('stockForm').action = "/products/" + id + "/stock";
 
 
                     document.getElementById('stockForm').reset();

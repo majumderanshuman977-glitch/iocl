@@ -100,9 +100,9 @@
                                 {{-- mobile --}}
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Mobile Number</label>
+                                        <label>Mobile Numb er</label>
                                         <input type="text" name="mobile_number" class="form-control"
-                                            value="{{ old('mobile_number', $deliveryBoy->mobile_number) }}">
+                                            value="{{ old('mobile_number', $deliveryBoy->mobile_number) }}" maxlength="10">
                                         @error('mobile_number')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -141,6 +141,17 @@
                                             placeholder="0.00">
 
                                         @error('pf_esi_percentage')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                 <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Max Cylinder Capacity</label>
+                                        <input type="text" name="max_cylinder_capacity_small" class="form-control"
+                                            value="{{ old('max_cylinder_capacity_small', $deliveryBoy->max_cylinder_capacity) }}">
+                                        @error('max_cylinder_capacity_small')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>

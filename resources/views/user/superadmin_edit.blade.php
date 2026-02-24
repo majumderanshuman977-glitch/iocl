@@ -24,7 +24,7 @@
                         <!-- Left column -->
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Name <span class="text-danger">*</span></label>
                                 <input type="text" name="name"
                                        class="form-control"
                                        value="{{ old('name', $user->name) }}" required>
@@ -43,8 +43,26 @@
                                        @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label>Password (leave blank to keep)</label>
+                              <div class="form-group">
+                                <label>Mobile Number <span class="text-danger">*</span></label>
+                                <input type="text" name="mobile"
+                                       class="form-control"
+                                       value="{{ old('mobile', $user->mobile) }}" maxlength="10" inputmode="numeric" pattern="[0-9]*" required>
+                                        @error('mobile')
+                                             <span class="text-danger">
+                                                {{$message}}
+                                             </span>
+                                        @enderror
+                                    </div>
+
+                        </div>
+
+                        <!-- Middle column -->
+                        <div class="col-lg-3 col-sm-6 col-12">
+
+
+                                      <div class="form-group">
+                                <label>Password (leave blank to keep) <span class="text-danger">*</span></label>
                                 <div class="pass-group">
                                     <input type="password"
                                            name="password"
@@ -55,25 +73,10 @@
                                       @enderror
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Middle column -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Mobile</label>
-                                <input type="text" name="mobile"
-                                       class="form-control"
-                                       value="{{ old('mobile', $user->mobile) }}" required>
-                                        @error('mobile')
-                                             <span class="text-danger">
-                                                {{$message}}
-                                             </span>
-                                        @enderror
-                                    </div>
 <input type="hidden" name="roles[]" value="super_admin">
 
                             <div class="form-group">
-                                <label>Confirm Password</label>
+                                <label>Confirm Password <span class="text-danger">*</span></label>
                                 <div class="pass-group">
                                     <input type="password"
                                            name="password_confirmation"

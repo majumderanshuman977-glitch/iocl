@@ -30,7 +30,7 @@
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="form-group">
                                     <input type="text" name="name" value="{{ request('name') }}"
-                                        placeholder="Enter Location Name" class="form-control">
+                                        placeholder="Search by Location Name" class="form-control">
                                 </div>
                             </div>
 
@@ -58,11 +58,11 @@
                                 <tr>
                                     <th>Location Name</th>
                                     <th>Cylinder Categories & Price</th>
-                                    <th>Date Created</th>
-                                    <th>Created By</th>
-                                    @can('super_admin')
+                                    <th>Update Date</th>
+                                    <th>Last Updated By</th>
+                                    @role('super_admin')
                                     <th>Action</th>
-                                    @endcan
+                                    @endrole
                                 </tr>
                             </thead>
 
@@ -87,10 +87,11 @@
                                             {{ $location->created_at->format('d/m/Y') }}
                                         </td>
                                         {{-- <td>{{$location->created_by}}</td> --}}
-                                        <td> {{ ucfirst(str_replace('_', ' ', $location->creator->getRoleNames()->first() ?? 'No Role')) }}
+                                        <td>{{$location->creator->name}} ({{ ucfirst(str_replace('_', ' ', $location->creator->getRoleNames()->first() ?? 'No Role')) }})
                                         </td>
 
-                                        @can('super_admin')
+
+                                        @can('edit_location')
                                             <td>
                                                 <a href="{{ route('location.edit', $location->id) }}"
                                                     class="btn btn-sm btn-primary">

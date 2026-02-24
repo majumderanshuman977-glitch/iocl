@@ -27,31 +27,35 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Email <span class="text-danger">*</span></label>
+                                    <label>Mobile Number <span class="text-danger">*</span></label>
+                                    <input type="text" name="mobile" class="form-control" value="{{ old('mobile') }}"
+                                        maxlength="10" inputmode="numeric" pattern="[0-9]*">
+                                    @error('mobile')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>Email</label>
                                     <input type="text" name="email" class="form-control" value="{{ old('email') }}">
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                            </div>
+
+                            <!-- Middle column -->
+                            <div class="col-lg-3 col-sm-6 col-12">
 
                                 <div class="form-group">
                                     <label>Password <span class="text-danger">*</span></label>
                                     <div class="pass-group">
                                         <input type="password" name="password" class="pass-input form-control" required>
                                         <span class="fas toggle-password fa-eye-slash"></span>
-                                        @error('password')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Middle column -->
-                            <div class="col-lg-3 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label>Mobile</label>
-                                    <input type="text" name="mobile" class="form-control" value="{{ old('mobile') }}">
-                                    @error('mobile')
+                                    </div>
+                                    @error('password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -59,14 +63,15 @@
                                 <input type="hidden" name="roles[]" value="super_admin">
 
                                 <div class="form-group">
-                                    <label>Confirm Password</label>
+                                    <label>Confirm Password <span class="text-danger">*</span></label>
                                     <div class="pass-group">
                                         <input type="password" name="password_confirmation" class="pass-input form-control">
                                         <span class="fas toggle-passworda fa-eye-slash"></span>
-                                        @error('password_confirmation')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+
                                     </div>
+                                    @error('password_confirmation')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 

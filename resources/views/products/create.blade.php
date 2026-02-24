@@ -37,7 +37,7 @@
                                         value="{{ old('price', 0) }}" required>
                                     @error('price')
                                         <span class="text-danger">
-                                                {{ $message }}
+                                            {{ $message }}
                                         </span>
                                     @enderror
                                 </div>
@@ -50,8 +50,32 @@
                                         value="{{ old('quantity', 0) }}" min="0" required>
                                     @error('quantity')
                                         <span class="text-danger">
-                                                {{ $message }}
+                                            {{ $message }}
                                         </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- CGST -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>CGST (%)</label>
+                                    <input type="number" step="0.01" name="cgst" class="form-control"
+                                        value="{{ old('cgst', 0) }}" min="0" required>
+                                    @error('cgst')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- SGST -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>SGST (%)</label>
+                                    <input type="number" step="0.01" name="sgst" class="form-control"
+                                        value="{{ old('sgst', 0) }}" min="0" required>
+                                    @error('sgst')
+                                        <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -63,7 +87,7 @@
                                     <textarea name="description" class="form-control" rows="5">{{ old('description') }}</textarea>
                                     @error('description')
                                         <span class="text-danger">
-                                                {{ $message }}
+                                            {{ $message }}
                                         </span>
                                     @enderror
                                 </div>

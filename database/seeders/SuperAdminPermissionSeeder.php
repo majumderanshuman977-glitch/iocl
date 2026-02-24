@@ -15,18 +15,19 @@ class SuperAdminPermissionSeeder extends Seeder
      */
        public function run(): void
     {
-        $role = Role::firstOrCreate(['name' => 'super_admin']);
+        // $role = Role::firstOrCreate(['name' => 'super_admin']);
 
 
-        $permissions = Permission::all();
+        // $permissions = Permission::all();
+     $allPermissions = Permission::pluck('name')->toArray();
 
-
-        $role->syncPermissions($permissions);
+        // $role->syncPermissions($permissions);
 
         $users = User::role('super_admin')->get();
 
         foreach ($users as $user) {
-            $user->assignRole($role); 
+            $user->syncPermissions($allPermissions);
+
         }
     }
 }

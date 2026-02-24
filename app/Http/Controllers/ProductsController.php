@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductLogs;
 use App\Models\Products;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use function Symfony\Component\Clock\now;
 
 class ProductsController extends Controller
 {
@@ -67,19 +70,24 @@ class ProductsController extends Controller
             'price' => 'nullable',
             'quantity' => 'nullable|numeric',
             'product_image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'sgst' => 'nullable|numeric',
+            'cgst' => 'nullable|numeric'
         ], [
             'product_name.required' => 'Product name is required',
             'product_name.unique' => 'Product name already exists',
         ]);
 
 
-        DB::transaction(function () use ($request) {
+        DB::beginTransaction();
+        try {
             $user = auth()->user();
             $product = new Products();
             $product->product_name = $request->product_name;
             $product->description = $request->description;
             $product->price = $request->price;
             $product->quantity = $request->quantity;
+            $product->sgst = $request->sgst;
+            $product->cgst = $request->cgst;
             $product->created_by = $user->id;
             $product->save();
 
@@ -98,11 +106,13 @@ class ProductsController extends Controller
                 $product_logs->remark = 'Product created';
                 $product_logs->save();
             }
-        });
 
-
-
-        return redirect()->route('products.list')->with('success', 'Product created successfully.');
+            DB::commit();
+            return redirect()->route('products.list')->with('success', 'Product created successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->route('products.list')->with('error', $e->getMessage());
+        }
     }
 
     public function edit($id)
@@ -116,20 +126,37 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user = auth()->user();
         $request->validate([
             'product_name' => 'required|string|max:255|unique:products,product_name,' . $id,
-            'price' => 'nullable',
-            'description' => 'nullable|string',
+            'price'        => 'nullable|numeric|min:0',
+            'description'  => 'nullable|string',
+            'product_image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'sgst' => 'nullable|numeric',
+            'cgst' => 'nullable|numeric'
         ], [
             'product_name.unique' => 'The product name has already been taken.',
-
         ]);
 
         $product = Products::findOrFail($id);
 
         $product->product_name = $request->product_name;
-        $product->price = $request->price;
-        $product->description = $request->description;
+        $product->price        = $request->price;
+        $product->description  = $request->description;
+        $product->sgst         = $request->sgst;
+        $product->cgst         = $request->cgst;
+        $product->created_by = $user->id;
+        $product->created_at  = now();
+        if ($request->hasFile('product_image')) {
+
+            if ($product->product_image && file_exists(storage_path('app/public/' . $product->product_image))) {
+                unlink(storage_path('app/public/' . $product->product_image));
+            }
+
+            $imagePath = $request->file('product_image')->store('products', 'public');
+            $product->product_image = $imagePath;
+        }
+
         $product->save();
 
         return redirect()->route('products.list')

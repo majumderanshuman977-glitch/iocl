@@ -26,7 +26,7 @@
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <input type="text" name="name" value="{{ request('name') }}"
-                                        placeholder="Enter Vehicle Name/Phone Number" class="form-control">
+                                        placeholder="Search by Vehicle Name/Phone Number" class="form-control">
                                 </div>
                             </div>
 
@@ -62,19 +62,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-2 col-sm-6 col-12 ms-auto">
+
+                            <div class="col-lg-3 col-sm-6 col-12 ms-auto">
                                 <div class="form-group d-flex align-items-center gap-2">
-                                    <button type="submit" class="btn btn-filters px-5 py-3">
-                                        <img src="{{ asset('assets/img/icons/search-whites.svg') }}" class="me-2">
+                                    <button type="submit" class="btn btn-primary px-4">
                                         Search
                                     </button>
 
-                                    <a href="{{ route('delivery-boy.list') }}" class="btn btn-filters px-5 py-3">
-                                        <img src="{{ asset('assets/img/icons/closes.svg') }}" class="me-2">
+                                    <a href="{{ route('delivery-boy.list') }}" class="btn btn-secondary px-4">
                                         Reset
                                     </a>
-
-
                                 </div>
                             </div>
                         </div>
@@ -111,34 +108,45 @@
                                                 {{ $db->driver_name }}
                                             @endif
                                         </td>
-                                        <td>{{ str_replace('_', ' ', $db->van_type) }}</td>
-                                        <td>{{ $db->mobile_number }}</td>
-                                        <td>{{ $db->max_cylinder_capacity }}</td>
-                                        <td>{{ $db->is_pf_esi ? 'Yes' : 'No' }}</td>
 
                                         <td>
-                                            <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                <input type="checkbox" id="user{{ $db->id }}" class="check db-status"
-                                                    data-id="{{ $db->id }}"
-                                                    {{ $db->status === 1 ? 'checked' : '' }}>
-                                                <label for="user{{ $db->id }}" class="checktoggle">checkbox</label>
-                                            </div>
+                                            @if ($db->van_type == 'large_van')
+                                                <span class="badge btn-primary">
+                                                    {{ str_replace('_', ' ', $db->van_type) }}
                                         </td>
+                                        </span>
+                                    @else
+                                        <span class="badge btn-sm btn-secondary">
+                                            {{ str_replace('_', ' ', $db->van_type) }}</td>
+                                        </span>
+                                @endif
 
-                                        <td>
-                                            {{ ucfirst(str_replace('_', ' ', $db->creator->getRoleNames()->first() ?? 'No Role')) }}
-                                        </td>
-                                        @can('edit_delivery_boys')
-                                            <td>
-                                                <a href="{{ route('delivery-boy.edit', $db->id) }}"
-                                                    class="btn btn-sm btn-primary">
-                                                    Edit
-                                                </a>
+                                <td>{{ $db->mobile_number }}</td>
+                                <td>{{ $db->max_cylinder_capacity }}</td>
+                                <td>{{ $db->is_pf_esi ? 'Yes' : 'No' }}</td>
 
-                                            </td>
-                                        @endcan
+                                <td>
+                                    <div class="status-toggle d-flex justify-content-between align-items-center">
+                                        <input type="checkbox" id="user{{ $db->id }}" class="check db-status"
+                                            data-id="{{ $db->id }}" {{ $db->status === 1 ? 'checked' : '' }}>
+                                        <label for="user{{ $db->id }}" class="checktoggle">checkbox</label>
+                                    </div>
+                                </td>
 
-                                    </tr>
+                                <td>
+                                    {{ $db->creator->name }}
+                                    ({{ ucfirst(str_replace('_', ' ', $db->creator->getRoleNames()->first() ?? 'No Role')) }})
+                                </td>
+                                @can('edit_delivery_boys')
+                                    <td>
+                                        <a href="{{ route('delivery-boy.edit', $db->id) }}" class="btn btn-sm btn-primary">
+                                            Edit
+                                        </a>
+
+                                    </td>
+                                @endcan
+
+                                </tr>
                                 @endforeach
 
                             </tbody>

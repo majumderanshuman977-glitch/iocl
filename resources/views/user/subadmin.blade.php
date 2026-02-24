@@ -25,7 +25,7 @@
                             <div class="col-lg-5 col-sm-6 col-12">
                                 <div class="form-group">
                                     <input type="text" name="name" value="{{ request('name') }}"
-                                        placeholder="Enter User Name/Mobile/Email" class="form-control">
+                                        placeholder="Search by User Name/Mobile Number" class="form-control">
                                 </div>
                             </div>
 
@@ -46,21 +46,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-2 col-sm-6 col-12 ms-auto">
+
+                            <div class="col-lg-3 col-sm-6 col-12 ms-auto">
                                 <div class="form-group d-flex align-items-center gap-2">
-                                    <button type="submit" class="btn btn-filters px-5 py-3">
-                                        <img src="{{ asset('assets/img/icons/search-whites.svg') }}" class="me-2">
+                                    <button type="submit" class="btn btn-primary px-4">
                                         Search
                                     </button>
 
-                                    <a href="{{ route('user.subadmin') }}" class="btn btn-filters px-5 py-3">
-                                        <img src="{{ asset('assets/img/icons/closes.svg') }}" class="me-2">
+                                    <a href="{{ route('user.subadmin') }}" class="btn btn-secondary px-4">
                                         Reset
                                     </a>
-
-
                                 </div>
                             </div>
+
                         </div>
                     </form>
 
@@ -107,12 +105,12 @@
 
                                             <a href="{{ route('user.permissions.subadmin', $u->id) }}"
                                                 class="btn btn-sm btn-success">
-                                                 Permissions
+                                                Permissions
                                             </a>
 
                                             <a href="{{ route('user.subadmin.edit', $u->id) }}"
                                                 class="btn btn-sm btn-primary">
-                                                 Edit
+                                                Edit
                                             </a>
 
 
@@ -123,9 +121,9 @@
                             </tbody>
                         </table>
                     </div>
-                        <div class="pagination-wrapper">
+                    <div class="pagination-wrapper">
                         {{ $user->links() }}
-                     </div>
+                    </div>
 
                 </div>
             </div>
@@ -140,38 +138,38 @@
 
 @section('script')
     <script>
-        document.addEventListener('change', function (e) {
+        document.addEventListener('change', function(e) {
 
-              if(e.target.classList.contains('user-status')){
+            if (e.target.classList.contains('user-status')) {
 
-                  let checkbox = e.target;
-                  let userId = checkbox.dataset.id;
-                  let status = checkbox.checked ? 'active' : 'inactive';
+                let checkbox = e.target;
+                let userId = checkbox.dataset.id;
+                let status = checkbox.checked ? 'active' : 'inactive';
 
-                  fetch("{{ route('user.status.update') }}", {
-                          method: "POST",
-                          headers: {
-                              "Content-Type": "application/json",
-                              "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                          },
-                          body: JSON.stringify({
-                              id: userId,
-                              status: status
-                          })
-                      })
-                      .then(res => res.json())
-                      .then(data => {
-                          if (data.success) {
-                              Swal.fire('Success', 'User status updated successfully', 'success');
+                fetch("{{ route('user.status.update') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            id: userId,
+                            status: status
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Success', 'User status updated successfully', 'success');
 
-                          }
-                      })
-                      .catch(() => {
-                          checkbox.checked = !checkbox.checked;
-                          Swal.fire('Error', 'Something went wrong', 'error');
-                      })
+                        }
+                    })
+                    .catch(() => {
+                        checkbox.checked = !checkbox.checked;
+                        Swal.fire('Error', 'Something went wrong', 'error');
+                    })
 
-              }
+            }
         });
         // document.querySelectorAll('.user-status').forEach(function(toggle) {
         //     toggle.addEventListener('change', function() {

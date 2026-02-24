@@ -103,6 +103,7 @@ class LocationController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user = auth()->user();
         $request->validate([
             'location_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -122,6 +123,8 @@ class LocationController extends Controller
             $location = Location::findOrFail($id);
             $location->location_name = $request->location_name;
             $location->address = $request->address;
+            $location->created_by = $user->id;
+            $location->created_at = now();
             $location->save();
 
             LocationCylinderCategory::where('location_id', $id)->delete();

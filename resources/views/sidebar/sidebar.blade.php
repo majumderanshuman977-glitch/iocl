@@ -160,29 +160,17 @@
                 </li>
 
                 {{-- New Connection  --}}
-                {{-- <li>
-                    <a href="{{ route('new-connection.index') }}"
-                        class="{{ set_active(['new-connection', 'new-connection/create', 'new-connection/{id}/edit']) }}">
-                        <img src="{{ asset('assets/img/icons/users1.svg') }}" alt="img">
-                        <span>New Connections</span>
-                    </a>
-                </li> --}}
-                {{-- submenu  --}}
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <img src="{{ asset('assets/img/icons/users1.svg') }}" alt="img">
-                        <span>New Connections</span>
-                        <span class="menu-arrow"></span>
-                    </a>
 
-                    <ul>
-                        <li><a href="{{ route('customers.index') }}"
-                                class="{{ set_active(['new-connection/customers']) }}">
-                                Customers</a>
-                        </li>
 
-                    </ul>
+                 <li>
+                    <a href="{{ route('customers.index') }}"
+                        class="{{ set_active(['new-connection/customers']) }}">
+                        <img src="{{ asset('assets/img/icons/users1.svg') }}" alt="img">
+                        <span>New Connection</span>
+                    </a>
                 </li>
+
+                  
 
                 {{-- Roles and Permission  --}}
 

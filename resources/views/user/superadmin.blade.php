@@ -26,7 +26,7 @@
                             <div class="col-lg-5 col-sm-6 col-12">
                                 <div class="form-group">
                                     <input type="text" name="name" value="{{ request('name') }}"
-                                        placeholder="Enter User Name/Mobile/Email" class="form-control">
+                                        placeholder="Search by User Name/Mobile Number" class="form-control">
                                 </div>
                             </div>
 
@@ -44,21 +44,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-2 col-sm-6 col-12 ms-auto">
+
+
+
+                            <div class="col-lg-3 col-sm-6 col-12 ms-auto">
                                 <div class="form-group d-flex align-items-center gap-2">
-                                    <button type="submit" class="btn btn-filters px-5 py-3">
-                                        <img src="{{ asset('assets/img/icons/search-whites.svg') }}" class="me-2">
+                                    <button type="submit" class="btn btn-primary px-4">
                                         Search
                                     </button>
 
-                                    <a href="{{ route('user.superadmin') }}" class="btn btn-filters px-5 py-3">
-                                        <img src="{{ asset('assets/img/icons/closes.svg') }}" class="me-2">
+                                    <a href="{{ route('user.superadmin') }}" class="btn btn-secondary px-4">
                                         Reset
                                     </a>
-
-
                                 </div>
                             </div>
+
                         </div>
                     </form>
 

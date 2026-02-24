@@ -1,5 +1,9 @@
 @extends('layouts.master')
 @section('content')
+
+
+
+
     <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
@@ -80,7 +84,7 @@
                                             <label>Mobile Number <span class="text-danger">*</span></label>
                                             <input type="text" name="large_mobile_number" id="large_mobile_number"
                                                 class="form-control" value="{{ old('large_mobile_number') }}"
-                                                placeholder="Enter 10 digit mobile number" maxlength="15">
+                                                placeholder="Enter 10 digit mobile number" maxlength="10">
                                             @error('large_mobile_number')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -120,7 +124,7 @@
                                             <label>Mobile Number <span class="text-danger">*</span></label>
                                             <input type="text" name="small_mobile_number" id="small_mobile_number"
                                                 class="form-control" value="{{ old('small_mobile_number') }}"
-                                                placeholder="Enter 10 digit mobile number" maxlength="15">
+                                                placeholder="Enter 10 digit mobile number" maxlength="10">
                                             @error('small_mobile_number')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -159,6 +163,19 @@
                                             @enderror
                                         </div>
                                     </div>
+
+
+                                      <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Max Cylinder Capacity <span class="text-danger">*</span></label>
+                                            <input type="number" name="max_cylinder_capacity_small" id="max_cylinder_capacity_small"
+                                                class="form-control" value="{{ old('max_cylinder_capacity_small') }}"
+                                                placeholder="Enter capacity" min="1">
+                                            @error('max_cylinder_capacity_small')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -185,6 +202,7 @@
 @endsection
 
 @section('script')
+
     <script>
         $(document).ready(function() {
 
@@ -210,7 +228,7 @@
                     $(
                     '#vehicle_name, #vehicle_number, #driver_owner_name, #large_mobile_number, #max_cylinder_capacity')
                         .prop('required', false);
-                    $('#van_boy_name, #small_mobile_number, #pf_esi_applicable').prop('required', true);
+                    $('#van_boy_name, #small_mobile_number, #pf_esi_applicable','#max_cylinder_capacity_small').prop('required', true);
                     // .prop('required', false);
 
 

@@ -12,14 +12,7 @@ return new class extends Migration
     public function up(): void
     {
 
-//     - id (Primary Key)
-// - invoice_id (Foreign Key → invoices.id)
-// - product_id (Foreign Key → products.id)
-// - product_name (VARCHAR) -- snapshot for historical record
-// - quantity (INT, NOT NULL)
-// - price (DECIMAL(10,2)) -- snapshot at time of sale
-// - line_total (DECIMAL(10,2))
-// - created_at (TIMESTAMP)
+
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('invoice_id');

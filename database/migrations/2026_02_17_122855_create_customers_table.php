@@ -13,13 +13,32 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name');
-            $table->string('mobile_number')->unique();
-            $table->string('address')->nullable();
-            $table->string('id_proof')->nullable();
-            $table->string('id_proof_number')->nullable();
-            $table->boolean('status')->default(true);
-            $table->string('created_by')->index()->nullable();
+            $table->string('title');
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('last_name');
+            $table->date('dob');
+            $table->string('email')->nullable();
+            $table->string('gas_consumer_number')->nullable();
+            $table->string('father_spouse_name');
+            $table->string('mother_name');
+            $table->string('profile_image')->nullable();
+            $table->string('house_flat_no');
+            $table->string('street');
+            $table->string('landmark')->nullable();
+            $table->string('city');
+            $table->string('district');
+            $table->string('state');
+            $table->string('pin_code');
+            $table->string('mobile_number');
+            $table->string('landline')->nullable();
+            $table->string('id_number');
+            $table->string('ration_card_number')->nullable();
+            $table->string('id_front_image')->nullable();
+            $table->string('id_back_image')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

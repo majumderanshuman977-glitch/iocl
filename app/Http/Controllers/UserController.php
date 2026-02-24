@@ -109,7 +109,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:15|unique:users,mobile',
+            'mobile' => 'required|string|max:10|unique:users,mobile',
             'email' => 'nullable|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'roles' => 'required|array',
@@ -172,7 +172,7 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:15|unique:users,mobile,' . $id,
+            'mobile' => 'required|string|max:10|unique:users,mobile,' . $id,
             'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8|confirmed',
             'roles' => 'required|array',

@@ -57,21 +57,25 @@ class DeliveryBoyController extends Controller
             'vehicle_type' => 'required',
 
             'vehicle_name' => 'nullable|string',
-            'large_mobile_number' => 'required_if:vehicle_type,LARGE_VAN|unique:delivery_boys,mobile_number',
-            'small_mobile_number' => 'required_if:vehicle_type,SMALL_VAN|unique:delivery_boys,mobile_number',
+            'large_mobile_number' => 'required_if:vehicle_type,LARGE_VAN|max:10|unique:delivery_boys,mobile_number',
+            'small_mobile_number' => 'required_if:vehicle_type,SMALL_VAN|max:10|unique:delivery_boys,mobile_number',
             'vehicle_number' => 'nullable|string',
             'driver_owner_name' => 'nullable|string',
             'van_boy_name' => 'nullable|string',
             'max_cylinder_capacity' => 'required_if:vehicle_type,LARGE_VAN|nullable',
+            'max_cylinder_capacity_small' => 'required_if:vehicle_type,SMALL_VAN|nullable',
             'pf_esi_applicable' => 'nullable|boolean',
             'pf_esi_percentage' => 'nullable|string',
         ], [
             'vehicle_name.required' => 'The vehicle name field is required.',
             'large_mobile_number.required_if' => 'The mobile number field is required.',
+            'large_mobile_number.max' => 'Mobile number must not exceed 10 characters.',
             'small_mobile_number.required_if' => 'The mobile number field is required.',
             'large_mobile_number.unique' => 'The mobile number has already been taken.',
+            'small_mobile_number.max' => 'Mobile number must not exceed 10 characters.',
             'small_mobile_number.unique' => 'The mobile number has already been taken.',
             'max_cylinder_capacity.required_if' => 'The max cylinder capacity field is required.',
+            'max_cylinder_capacity_small.required_if' => 'The max cylinder capacity field is required.',
         ]);
 
 
@@ -100,6 +104,7 @@ class DeliveryBoyController extends Controller
             $deliveryBoy->pf_esi_percentage = $request->pf_esi_applicable ? '12.50' : null;
             $deliveryBoy->status = true;
             $deliveryBoy->created_by = $user->id;
+            $deliveryBoy->max_cylinder_capacity = $request->max_cylinder_capacity_small;
             $deliveryBoy->save();
         }
         return redirect()->route('delivery-boy.list')->with('success', 'Delivery Boy created successfully.');
@@ -126,7 +131,7 @@ class DeliveryBoyController extends Controller
 
         $rules = [
             'driver_name' => 'required|string|max:255',
-            'mobile_number' => 'required|string|max:20|unique:delivery_boys,mobile_number,' . $id,
+            'mobile_number' => 'required|string|max:10|unique:delivery_boys,mobile_number,' . $id,
             'van_type' => 'required'
         ];
 
@@ -139,6 +144,7 @@ class DeliveryBoyController extends Controller
         } else {
             $rules['is_pf_esi'] = 'required|boolean';
             $rules['pf_esi_percentage'] = 'nullable';
+            $rules['max_cylinder_capacity_small'] = 'required|numeric';
         }
 
         $validated = $request->validate($rules);
@@ -160,6 +166,7 @@ class DeliveryBoyController extends Controller
             $deliveryBoy->pf_esi_percentage = $request->is_pf_esi == 1
                 ? $request->pf_esi_percentage
                 : null;
+            $deliveryBoy->max_cylinder_capacity = $request->max_cylinder_capacity_small;
         }
 
         $deliveryBoy->save();
